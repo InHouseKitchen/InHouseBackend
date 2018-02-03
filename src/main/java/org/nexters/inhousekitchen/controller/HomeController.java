@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
 	
 	@RequestMapping("home.do")
+	
 	public String home(){
 		System.out.println("보빈짱");
 		return "home";

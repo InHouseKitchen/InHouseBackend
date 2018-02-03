@@ -11,4 +11,13 @@ public class MypageController {
 	@Resource
 	MypageService mypageService;
 	
+	//regHostMenu
+	
+	
+	//getBookingList
+	
+	//getReviewList
+	
+	//myMenu
+	
 }
