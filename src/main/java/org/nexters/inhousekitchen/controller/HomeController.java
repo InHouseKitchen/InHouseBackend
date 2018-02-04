@@ -8,6 +8,8 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 
 import org.nexters.inhousekitchen.dto.HostDTO;
+import org.nexters.inhousekitchen.service.SearchService;
+import org.nexters.inhousekitchen.service.SearchServiceimpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -25,26 +27,22 @@ import io.swagger.annotations.ApiOperation;
  * Handles requests for the application home page.
  */
 @RestController
-@RequestMapping("/")
+@RequestMapping("/home")
 @Api(value="swag-controller")
+
 public class HomeController {
 	
+	private SearchService searchService;
 	
+	
+	/*메인페이지(랜덤한 호스트 메뉴 조회)*/
+	@RequestMapping(method=RequestMethod.GET)
 	@ResponseBody
 	public String home(){
+		searchService = new SearchServiceimpl();
 		System.out.println("보빈짱");
 		return "home";
 	}
 	
-	@RequestMapping(value= "/ajax.seo", method=RequestMethod.GET)
-	@ResponseBody
-	public String person(@RequestParam("id") String id,HttpServletResponse response)  {
-	    String personJson = "{\"id\":\""+"김다은"
-	                    +"\",\"name\":\""+"자고싶다"
-	                    +"\",\"password\":\""+"password"
-	                    +"\",\"email\":\""+"getting sleep"+"\"}";
-	
-	   return personJson;
-	}
-	
+
 }
