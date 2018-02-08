@@ -29,18 +29,11 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @RequestMapping("/home")
-@Api(value="swag-controller")
-
 public class HomeController {
 	@Resource
 	private SearchService searchService;
 	
-	
-	/*메인페이지(랜덤한 호스트 메뉴 조회)*/
-	@RequestMapping(method=RequestMethod.GET)
-	@ResponseBody
 	public String home(){
-		searchService = new SearchServiceimpl();
 		System.out.println("보빈짱");
 		return "home";
 	}
