@@ -17,6 +17,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="mybatis/booking.xml"/>	
 		<mapper resource="mybatis/dining.xml"/>	
 		<mapper resource="mybatis/mypage.xml"/>		
+		<mapper resource="mybatis/prefer.xml"/>		
 	</mappers>
 </configuration>
 

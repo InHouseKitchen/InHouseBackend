@@ -16,8 +16,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="org.nexters.inhousekitchen.dto.DiningDTO" id="DiningRM">
 		<result javaType="java.lang.Integer" property="id" column="id"/>
 		<result javaType="java.lang.Integer" property="hostId" column="hostId"/>
-		<result javaType="java.lang.Date" property="startDate" column="startDate"/>
-		<result javaType="java.lang.Date" property="endDate" column="endDate"/>
+		<result javaType="java.util.Date" property="startDate" column="startDate"/>
+		<result javaType="java.util.Date" property="endDate" column="endDate"/>
 		<result javaType="java.lang.String" property="startTime" column="startTime"/>
 		<result javaType="java.lang.String" property="endTime" column="endTime"/>
 		<result javaType="java.lang.Double" property="longitude" column="longitude"/>
@@ -28,12 +28,81 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result javaType="java.lang.String" property="endTime" column="endTime"/>
 		<collection javaType="java.util.List" property="diningImages" resultMap="DiningImageResultMap"></collection>
 	</resultMap>
+	
+	<resultMap  type="org.nexters.inhousekitchen.dto.BookingDTO" id="BookingRM">
+		<result javaType="java.lang.Integer" property="id" column="id"/>
+		<result javaType="java.lang.Integer" property="userId" column="userId"/>
+		<result javaType="java.lang.Integer" property="diningId" column="diningId"/>
+		<result javaType="java.lang.Integer" property="guestNumber" column="guestNumber"/>
+		<result javaType="java.lang.String" property="status" column="status"/>
+		<result javaType="java.util.Date" property="reservationDate" column="reservationDate"/>
+	</resultMap>
+	
+	<resultMap type="org.nexters.inhousekitchen.dto.ReviewDTO" id="ReviewRM">
+		<result javaType="java.lang.Integer" property="id" column="id"/>
+		<result javaType="java.lang.Integer" property="userId" column="userId"/>
+		<result javaType="java.lang.Integer" property="diningId" column="diningId"/>
+		<result javaType="java.lang.Integer" property="score" column="score"/>
+		<result javaType="java.lang.String" property="createDate" column="createDate"/>
+	</resultMap>
 
-	<insert id="regHostMenu"  parameterType="DiningDTO">
+	<insert id="regHostMenu" >
 	insert into dining(id, hostId, startDate, endDate, startTime, endTime, longitude, latitude, price, guests, dIntro, mIntro, diningImages)
 	values(#{id},#{hostId},#{startDate},#{endDate},#{startTime},#{endTime},#{longitude},#{latitude},#{price},#{guests},#{dIntro},#{mIntro},#{diningImages})
 	</insert>
-
+	
+	<select id="getBookingList" resultMap="BookingRM" resultType="org.nexters.inhousekitchen.dto.BookingDTO" parameterType="String" >
+		select * from Booking where userId=#{value}
+	</select>
+	
+	<select id="getReviewList" resultMap="ReviewRM" resultType="org.nexters.inhousekitchen.dto.ReviewDTO" parameterType="String">
+		select * from Review where userId=#{value}
+	</select>
+	
 
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  

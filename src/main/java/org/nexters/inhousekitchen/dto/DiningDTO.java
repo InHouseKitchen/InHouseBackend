@@ -51,6 +51,14 @@ public class DiningDTO {
 	}
 
 	
+	public DiningDTO(int id2, int hostId2, java.util.Date startDate2, java.util.Date endDate2, Double longitude2,
+			Double latitude2, int price2, int guests2, String dIntro2, String mIntro2, DiningImageDTO diningImages2) {
+		// TODO Auto-generated constructor stub
+	}
+	public DiningDTO(int id2, int hostId2, String startDate2, String endDate2, Double longitude2, Double latitude2,
+			int price2, int guests2, String dIntro2, String mIntro2, DiningImageDTO diningImages2) {
+		// TODO Auto-generated constructor stub
+	}
 	public Integer getId() {
 		return id;
 	}
