@@ -1,5 +1,6 @@
 package org.nexters.inhousekitchen.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,7 +18,9 @@ public class MypageDAOimpl implements MypageDAO {
 
 	@Override
 	public void regHostMenu(DiningDTO dining) {
-		template.insert("mypage.regHostMenu", dining);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("dining", dining);
+		template.insert("mypage.regHostMenu", map);
 	}
 
 	@Override
