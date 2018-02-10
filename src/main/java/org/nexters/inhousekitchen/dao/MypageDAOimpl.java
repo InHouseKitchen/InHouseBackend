@@ -1,5 +1,7 @@
 package org.nexters.inhousekitchen.dao;
 
+import java.util.HashMap;
+
 import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -13,7 +15,9 @@ public class MypageDAOimpl implements MypageDAO {
 
 	@Override
 	public void regHostMenu(DiningDTO dining) {
-		template.insert("mypage.regHostMenu", dining);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("dining", dining);
+		template.insert("mypage.regHostMenu", map);
 	}
 	
 }
