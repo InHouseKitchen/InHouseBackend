@@ -3,7 +3,37 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
 <mapper namespace="mypage">
+
+<resultMap type="org.nexters.inhousekitchen.dto.DiningImageDTO" id="DiningImageResultMap">
+		<result javaType="java.lang.Integer" property="id" column="id"></result>
+		<result javaType="java.lang.Integer" property="diningId" column="diningId"></result>
+		<result javaType="java.lang.String" property="imageUrl" column="imageUrl"></result>
+	</resultMap>
+
+	<resultMap type="org.nexters.inhousekitchen.dto.DiningDTO" id="DiningRM">
+		<result javaType="java.lang.Integer" property="id" column="id"/>
+		<result javaType="java.lang.Integer" property="hostId" column="hostId"/>
+		<result javaType="java.lang.Date" property="startDate" column="startDate"/>
+		<result javaType="java.lang.Date" property="endDate" column="endDate"/>
+		<result javaType="java.lang.String" property="startTime" column="startTime"/>
+		<result javaType="java.lang.String" property="endTime" column="endTime"/>
+		<result javaType="java.lang.Double" property="longitude" column="longitude"/>
+		<result javaType="java.lang.Double" property="latitude" column="latitude"/>
+		<result javaType="java.lang.Integer" property="price" column="price"/>
+		<result javaType="java.lang.Integer" property="guests" column="guests"/>
+		<result javaType="java.lang.String" property="dIntro" column="dIntro"/>
+		<result javaType="java.lang.String" property="endTime" column="endTime"/>
+		<collection javaType="java.util.List" property="diningImages" resultMap="DiningImageResultMap"></collection>
+	</resultMap>
+
+	<insert id="regHostMenu"  parameterType="DiningDTO">
+	insert into dining(id, hostId, startDate, endDate, startTime, endTime, longitude, latitude, price, guests, dIntro, mIntro, diningImages)
+	values(#{id},#{hostId},#{startDate},#{endDate},#{startTime},#{endTime},#{longitude},#{latitude},#{price},#{guests},#{dIntro},#{mIntro},#{diningImages})
+	</insert>
+
 
 </mapper>
  
