@@ -34,9 +34,10 @@ public class SearchController {
     @ApiImplicitParam(name="accessToken", value="구글 로그인 토큰", required=false, dataType="string", paramType="header")
 	@ResponseBody
 	public List<DiningDTO> mainPage() throws ServerErrorException {
+		
 		List<DiningDTO> menuList = null;
 		try {
-			menuList = searchService.getHomeMenues();
+			menuList = searchService.getHomeMenues(1);
 			return menuList;
 		}catch(ServerErrorException e) {
 			System.out.println(e.getMessage());
@@ -44,4 +45,6 @@ public class SearchController {
 		}
 		
 	}
+	
+
 }

@@ -26,6 +26,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/afterLogin_*/*.do"/>
+			<mvc:exclude-mapping path="/search/main"></mvc:exclude-mapping>
 			<bean class="org.nexters.inhousekitchen.controller.LoginCheckInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
