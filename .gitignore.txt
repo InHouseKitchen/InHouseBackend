@@ -1,0 +1,6 @@
+/target/
+/classes/
+/test-classes/
+/.idea/
+/inhousekitchen.iml
+/src/main/webapp/WEB-INF/spring-model.xml

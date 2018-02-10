@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sql Mapper -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dining">
+
+	<resultMap type="org.nexters.inhousekitchen.dto.DiningImageDTO" id="DiningImageResultMap">
+		<result javaType="java.lang.Integer" property="id" column="id"></result>
+		<result javaType="java.lang.Integer" property="diningId" column="diningId"></result>
+		<result javaType="java.lang.String" property="imageUrl" column="imageUrl"></result>
+	</resultMap>
+	
+	<resultMap type="org.nexters.inhousekitchen.dto.DiningDTO" id="DiningResultMap">
+		<result javaType="java.lang.Integer" property="id" column="id"></result>
+		<result javaType="java.lang.Integer" property="hostId" column="hostId"></result>
+		<result javaType="java.sql.Date" property="startDate" column="startDate"></result>
+		<result javaType="java.sql.Date" property="endDate" column="endDate"></result>
+		<result javaType="java.lang.String" property="startTime" column="startTime"></result>
+		<result javaType="java.lang.String" property="endTime" column="endTime"></result>
+		<result javaType="java.lang.Double" property="longtitude" column="longtitude"></result>
+		<result javaType="java.lang.Double" property="latitude" column="latitude"></result>
+		<result javaType="java.lang.Integer" property="price" column="price"></result>
+		<result javaType="java.lang.Integer" property="guests" column="guests"></result>
+		<result javaType="java.lang.String" property="dIntro" column="dIntro"></result>
+		<collection javaType="java.util.List" property="diningImages" resultMap="DiningImageResultMap"></collection>
+	</resultMap>
+	
+	<!-- 김다은 - 로그아웃 상태에서 메인페이지 조회 시 실행쿼리 
+		 		 오늘 이후로 진행되는 메뉴들 중에 임의로 6개 뽑기 -->
+	<select id="selectRandom" resultMap="DiningResultMap">
+		SELECT Dining.id, Dining.dIntro, Dining.price, IMG.imageUrl
+		FROM Dining 
+		JOIN ( SELECT diningId, imageUrl 
+				FROM DiningImage 
+				GROUP BY diningId ) as IMG
+		ON Dining.id = IMG.diningId
+		WHERE Dining.startDate > SYSDATE()
+		ORDER BY RAND()
+		LIMIT 6
+	</select>
+</mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

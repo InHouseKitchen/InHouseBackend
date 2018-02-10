@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.nexters.inhousekitchen.dto.HostDTO;
@@ -29,7 +30,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/home")
 public class HomeController {
-	
+	@Resource
 	private SearchService searchService;
 	
 	public String home(){

@@ -48,19 +48,3 @@
 	<mvc:resources location="classpath:/META-INF/resources/webjars/" mapping="/swagger-resources/**"></mvc:resources>
 
 </beans>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
