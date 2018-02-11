@@ -37,7 +37,7 @@ public class DiningImageDTO {
 		this.id = id;
 	}
 	
-	@ApiModelProperty(value = "해당 이미지를 소유하는 다이닝 식별자")
+	@ApiModelProperty(value = "해당 이미지를 소유하는 다이닝 식별자", hidden=true)
 	public Integer getDiningId() {
 		return diningId;
 	}
