@@ -27,9 +27,12 @@ public class SearchController {
 		
 	/*메인페이지 */
 	@ApiOperation(httpMethod="GET", value="위치검색 전 홈에서 메뉴 조회(Internal Server Error 나면 NULL 반환)")
-	@RequestMapping(value="/main", method=RequestMethod.GET)
+	@RequestMapping(value="/main", method=RequestMethod.GET, produces = { "application/json" })
 	@ApiResponses(value = { @ApiResponse(code = 500, message = "Internal Server Error"),
-		      				   @ApiResponse(code = 200, message = "OK") })
+		      				   @ApiResponse(code = 200, message = "OK"),
+		      				   @ApiResponse(code = 401, message = ""),
+		      				   @ApiResponse(code = 500, message = "Internal Server Error"),
+		      				   @ApiResponse(code = 500, message = "Internal Server Error")})
 	@ResponseBody
 	public List<DiningDTO> mainPage() throws ServerErrorException {
 		
@@ -37,6 +40,10 @@ public class SearchController {
 		
 		try {
 			menuList = searchService.getHomeMenues(1);
+			for(DiningDTO element: menuList) {
+				element.getDiningImages().get(0).setId(null);
+				element.getDiningImages().get(0).setDiningId(null);
+			}
 		}catch(ServerErrorException e) {
 			System.out.println(e.getMessage());
 			throw e;
