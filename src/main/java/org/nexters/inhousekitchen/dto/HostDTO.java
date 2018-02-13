@@ -8,11 +8,11 @@ public class HostDTO extends MemberDTO{
 	private String address;
 	private String profile;
 	
-	public HostDTO(String id, String userName, String pwd, String email, String status) {
+	public HostDTO(Integer id, String userName, String pwd, String email, String status) {
 		super(id, userName, pwd, email, status);
 	}
 	
-	public HostDTO(String id, String userName, String pwd, String email, String status, String phone, String foodType,
+	public HostDTO(Integer id, String userName, String pwd, String email, String status, String phone, String foodType,
 			String cookType, String address, String profile) {
 		super(id, userName, pwd, email, status);
 		this.phone = phone;

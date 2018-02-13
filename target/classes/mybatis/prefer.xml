@@ -9,4 +9,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM Preference
 		WHERE userId = #{memberId}
 	</select>
+	<insert id="insertNew" parameterType="org.nexters.inhousekitchen.dto.PreferDTO">
+		INSERT INTO Preference(userId, favor1, favor2, favor3, favor4)
+		VALUES (#{memberId}, #{favor1}, #{favor2}, #{favor3}, #{favor4})
+	</insert>
 </mapper>

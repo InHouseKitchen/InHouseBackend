@@ -12,6 +12,7 @@ public class PreferDAOimpl implements PreferDAO{
 	@Resource
 	SqlSessionTemplate template;
 	
+	@Override
 	public PreferDTO selectByMemberId(int memberId) throws ServerErrorException{
 		try {
 			PreferDTO result = template.selectOne("prefer.selectByUserId", memberId);
@@ -21,5 +22,15 @@ public class PreferDAOimpl implements PreferDAO{
 			throw new ServerErrorException(e.getMessage());
 		}
 
+	}
+	
+	@Override
+	public void insertNew(PreferDTO prefer) throws ServerErrorException{
+		try {
+			template.insert("prefer.insertNew", prefer);
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new ServerErrorException(e.getMessage());
+		}
 	}
 }

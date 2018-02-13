@@ -1,5 +1,11 @@
 package org.nexters.inhousekitchen.service;
 
+import org.nexters.inhousekitchen.dto.MemberDTO;
+import org.nexters.inhousekitchen.dto.PreferDTO;
+import org.nexters.inhousekitchen.exception.ServerErrorException;
+import org.nexters.inhousekitchen.exception.WrongParamException;
+import org.springframework.transaction.annotation.Transactional;
+
 public interface MemberService {
 	//회원관리 관련 서비스 만드는 곳입니다
 	
@@ -10,6 +16,8 @@ public interface MemberService {
 	
 	//MemberDTO register();
 	
+	@Transactional
+	void registerMember(MemberDTO member, PreferDTO prefer) throws ServerErrorException, WrongParamException;
 	
 	
 }

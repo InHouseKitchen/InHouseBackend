@@ -2,9 +2,10 @@ package org.nexters.inhousekitchen.dto;
 import java.sql.Date;
 import java.util.List;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.lang.Integer;
 import java.lang.String;
@@ -12,6 +13,7 @@ import java.lang.Double;
 
 /*null인 데이터필드는 응답 값에서 제외되도록 하는 어노테이션*/
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@ApiModel(value="Dining", subTypes= {DiningImageDTO.class})
 public class DiningDTO {
 	private Integer id;
 	private Integer hostId;
@@ -50,15 +52,11 @@ public class DiningDTO {
 
 	}
 
-	
 	public DiningDTO(int id2, int hostId2, java.util.Date startDate2, java.util.Date endDate2, Double longitude2,
 			Double latitude2, int price2, int guests2, String dIntro2, String mIntro2, DiningImageDTO diningImages2) {
 		// TODO Auto-generated constructor stub
 	}
-	public DiningDTO(int id2, int hostId2, String startDate2, String endDate2, Double longitude2, Double latitude2,
-			int price2, int guests2, String dIntro2, String mIntro2, DiningImageDTO diningImages2) {
-		// TODO Auto-generated constructor stub
-	}
+	@ApiModelProperty(value = "다이닝 식별자")
 	public Integer getId() {
 		return id;
 	}
@@ -68,7 +66,7 @@ public class DiningDTO {
 		this.id = id;
 	}
 
-
+	@ApiModelProperty(value = "다이닝 글을 등록한 호스트의 식별자")
 	public Integer getHostId() {
 		return hostId;
 	}
@@ -78,7 +76,7 @@ public class DiningDTO {
 		this.hostId = hostId;
 	}
 
-
+	@ApiModelProperty(value = "게스트 초대가능한 기간 중 시작날짜")
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -88,7 +86,7 @@ public class DiningDTO {
 		this.startDate = startDate;
 	}
 
-
+	@ApiModelProperty(value = "게스츠 초대가능한 기간 중 종료날짜")
 	public Date getEndDate() {
 		return endDate;
 	}
@@ -98,6 +96,7 @@ public class DiningDTO {
 		this.endDate = endDate;
 	}
 
+	@ApiModelProperty(value = "기간동안 진행되는 다이닝 시작시간")
 	public String getStartTime() {
 		return startTime;
 	}
@@ -107,7 +106,7 @@ public class DiningDTO {
 		this.startTime = startTime;
 	}
 
-
+	@ApiModelProperty(value = "기간동안 진행되는 다이닝 종료시간")
 	public String getEndTime() {
 		return endTime;
 	}
@@ -117,7 +116,7 @@ public class DiningDTO {
 		this.endTime = endTime;
 	}
 
-
+	@ApiModelProperty(value = "다이닝 장소(경도)")
 	public Double getLongitude() {
 		return longitude;
 	}
@@ -127,7 +126,7 @@ public class DiningDTO {
 		this.longitude = longitude;
 	}
 
-
+	@ApiModelProperty(value = "다이닝 장소(위도)")
 	public Double getLatitude() {
 		return latitude;
 	}
@@ -137,7 +136,7 @@ public class DiningDTO {
 		this.latitude = latitude;
 	}
 
-
+	@ApiModelProperty(value = "가능한 게스트 수")
 	public Integer getGuests() {
 		return guests;
 	}
@@ -147,7 +146,7 @@ public class DiningDTO {
 		this.guests = guests;
 	}
 
-
+	@ApiModelProperty(value = "다이닝 소개")
 	public String getdIntro() {
 		return dIntro;
 	}
@@ -157,7 +156,7 @@ public class DiningDTO {
 		this.dIntro = dIntro;
 	}
 
-
+	@ApiModelProperty(value = "다이닝에서 제공하는 음식들 소개")
 	public String getmIntro() {
 		return mIntro;
 	}
@@ -167,7 +166,7 @@ public class DiningDTO {
 		this.mIntro = mIntro;
 	}
 
-	
+	@ApiModelProperty(value = "가격")
 	public Integer getPrice() {
 		return price;
 	}
@@ -177,7 +176,7 @@ public class DiningDTO {
 		this.price = price;
 	}
 	
-	
+	@ApiModelProperty(value = "등록한 이미지들")
 	public List<DiningImageDTO> getDiningImages() {
 		return diningImages;
 	}
