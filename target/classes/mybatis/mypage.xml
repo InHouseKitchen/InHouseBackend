@@ -59,6 +59,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from Review where userId=#{value}
 	</select>
 	
+	<update id="statusChange" parameterType="Integer">
+		update User set status='host' where id=#{value}
+	</update>
+	
 
 </mapper>
 

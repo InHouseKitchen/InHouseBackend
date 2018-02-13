@@ -14,6 +14,8 @@ public interface MypageDAO {
 
 	List<ReviewDTO> getReviewList(String userId);
 
+	void statusChange(Integer hostId);
+
 	
 
 }

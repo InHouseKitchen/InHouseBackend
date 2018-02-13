@@ -30,6 +30,11 @@ public class MypageServiceimpl implements MypageService {
 		return mypageDAO.getReviewList(userId);
 	}
 
+	@Override
+	public void statusChange(Integer hostId) {
+		 mypageDAO.statusChange(hostId);
+	}
+
 	
 	
 	

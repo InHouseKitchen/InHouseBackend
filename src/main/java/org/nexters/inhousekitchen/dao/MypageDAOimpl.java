@@ -33,6 +33,11 @@ public class MypageDAOimpl implements MypageDAO {
 		return template.selectList("mypage.getReviewList", userId);
 	}
 
+	@Override
+	public void statusChange(Integer hostId) {
+		template.update("mypage.statusChange", hostId);
+	}
+
 	
 	
 }

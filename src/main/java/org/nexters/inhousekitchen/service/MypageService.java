@@ -14,6 +14,8 @@ public interface MypageService {
 
 	List<ReviewDTO> getReviewList(String userId);
 
+	void statusChange(Integer hostId);
+
 	
 
 	

@@ -42,10 +42,12 @@ public class MypageController {
             @RequestParam(value = "mIntro", required = true) String mIntro,
             @RequestParam(value = "diningImages", required = true) DiningImageDTO diningImages
 			){
-		// 메뉴를 등록하기 위해서는 어떻게??
+		
 		DiningDTO dining=new DiningDTO(id, hostId, startDate, endDate, longitude, latitude, price, guests, dIntro, mIntro, diningImages);
 		mypageService.regHostMenu(dining);
-		// 잠시 있다가 구현
+		/*User의 status 변경 : guest -> host*/
+		mypageService.statusChange(dining.getHostId());
+		
 		return "성공 or 실패";
 	}
 	
