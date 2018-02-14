@@ -28,12 +28,85 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result javaType="java.lang.String" property="endTime" column="endTime"/>
 		<collection javaType="java.util.List" property="diningImages" resultMap="DiningImageResultMap"></collection>
 	</resultMap>
+	
+	<resultMap  type="org.nexters.inhousekitchen.dto.BookingDTO" id="BookingRM">
+		<result javaType="java.lang.Integer" property="id" column="id"/>
+		<result javaType="java.lang.Integer" property="userId" column="userId"/>
+		<result javaType="java.lang.Integer" property="diningId" column="diningId"/>
+		<result javaType="java.lang.Integer" property="guestNumber" column="guestNumber"/>
+		<result javaType="java.lang.String" property="status" column="status"/>
+		<result javaType="java.util.Date" property="reservationDate" column="reservationDate"/>
+	</resultMap>
+	
+	<resultMap type="org.nexters.inhousekitchen.dto.ReviewDTO" id="ReviewRM">
+		<result javaType="java.lang.Integer" property="id" column="id"/>
+		<result javaType="java.lang.Integer" property="userId" column="userId"/>
+		<result javaType="java.lang.Integer" property="diningId" column="diningId"/>
+		<result javaType="java.lang.Integer" property="score" column="score"/>
+		<result javaType="java.lang.String" property="createDate" column="createDate"/>
+	</resultMap>
 
 	<insert id="regHostMenu" parameterType="java.util.HashMap">
 	insert into dining(id, hostId, startDate, endDate, startTime, endTime, longitude, latitude, price, guests, dIntro, mIntro)
 	values(#{dining.id},#{dining.hostId},#{dining.startDate},#{dining.endDate},#{dining.startTime},#{dining.endTime},#{dining.longitude},#{dining.latitude},#{dining.price},#{dining.guests},#{dining.dIntro},#{dining.mIntro})
 	</insert>
-
+	
+	<select id="getBookingList" resultMap="BookingRM" resultType="org.nexters.inhousekitchen.dto.BookingDTO" parameterType="String" >
+		select * from Booking where userId=#{value}
+	</select>
+	
+	<select id="getReviewList" resultMap="ReviewRM" resultType="org.nexters.inhousekitchen.dto.ReviewDTO" parameterType="String">
+		select * from Review where userId=#{value}
+	</select>
+	
+	<update id="statusChange" parameterType="Integer">
+		update User set status='host' where id=#{value}
+	</update>
+	
 
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  

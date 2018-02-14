@@ -4,7 +4,21 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
-	
+	<select id="selectByUsername" parameterType="java.util.HashMap" resultType="org.nexters.inhousekitchen.dto.MemberDTO">
+		SELECT * 
+		FROM User
+		WHERE username = #{username}
+	</select>
+	<select id="selectByEmail" parameterType="java.util.HashMap" resultType="org.nexters.inhousekitchen.dto.MemberDTO">
+		SELECT * 
+		FROM User
+		WHERE email = #{email}
+	</select>
+	  <!-- 새로 삽입이 발생하면 삽입된 member의 자동증가된 id반환 -->
+	<insert id="insertNew" parameterType="org.nexters.inhousekitchen.dto.MemberDTO" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO User(username, password, email, status)
+		VALUES (#{userName}, #{pwd}, #{email}, "guest")
+	</insert>
 </mapper>
  
  

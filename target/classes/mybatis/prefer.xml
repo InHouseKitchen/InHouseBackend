@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sql Mapper -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="prefer">
+	<select id="selectByUserId" parameterType="int" resultType="org.nexters.inhousekitchen.dto.PreferDTO">
+		SELECT *
+		FROM Preference
+		WHERE userId = #{memberId}
+	</select>
+	<insert id="insertNew" parameterType="org.nexters.inhousekitchen.dto.PreferDTO">
+		INSERT INTO Preference(userId, favor1, favor2, favor3, favor4)
+		VALUES (#{memberId}, #{favor1}, #{favor2}, #{favor3}, #{favor4})
+	</insert>
+</mapper>
