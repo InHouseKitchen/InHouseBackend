@@ -9,11 +9,11 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value="Member", subTypes={PreferDTO.class})
 public class MemberDTO {
 	private  Integer id;
-	private String userName;
-	private String email;
-	private String pwd;
+	protected String userName;
+	protected String email;
+	protected String pwd;
 	private String status;
-	private PreferDTO prefer;
+	protected PreferDTO prefer;
 	
 	
 

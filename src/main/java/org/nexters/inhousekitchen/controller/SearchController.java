@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping("/search")
-@Api(value="/search", description="홈 화면 & 검색페이지")
+@Api(value="/search", description="홈 & 검색 & 호스트 상세조회")
 
 public class SearchController {
 

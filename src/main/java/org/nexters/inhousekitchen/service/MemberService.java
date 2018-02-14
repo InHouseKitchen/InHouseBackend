@@ -19,5 +19,7 @@ public interface MemberService {
 	@Transactional
 	void registerMember(MemberDTO member, PreferDTO prefer) throws ServerErrorException, WrongParamException;
 	
+	MemberDTO getMemberByUserName(String username) throws ServerErrorException;
+	MemberDTO getMemberByEmail(String email) throws ServerErrorException;
 	
 }

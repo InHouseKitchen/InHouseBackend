@@ -20,25 +20,41 @@ public class MemberServiceimpl implements MemberService {
 	PreferDAO preferDAO;
 	
 	
+	
+	/*사용자 아이디로 Member 조회*/
+	public MemberDTO getMemberByUserName(String username) throws ServerErrorException{
+		MemberDTO usernameResult = null;
+		try {
+			usernameResult = memberDAO.selectByUsername(username);
+			return usernameResult;
+		}catch(ServerErrorException e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	/*사용자 이메일 주소로 Member 조회*/
+	public MemberDTO getMemberByEmail(String email) throws ServerErrorException{
+		MemberDTO emailResult = null;
+		try {
+			emailResult = memberDAO.selectByEmail(email);
+			return emailResult;
+		}catch(ServerErrorException e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	
 	/* 회원가입 */
 	@Override
-	public void registerMember(MemberDTO newMember, PreferDTO prefer) throws ServerErrorException, WrongParamException{
-		MemberDTO usernameResult = null;
-		MemberDTO emailResult = null;
+	public void registerMember(MemberDTO newMember, PreferDTO prefer) throws ServerErrorException{
 		try{
-			/* 중복되는 아이디나 이메일이 있는지 체크*/
-			usernameResult = memberDAO.selectByUsername(newMember.getUserName());
-			emailResult = memberDAO.selectByEmail(newMember.getEmail());
-			if(usernameResult!=null) throw new WrongParamException("이미 존재하는 아이디입니다.");
-			if(emailResult!=null) throw new WrongParamException("이미 존재하는 이메일입니다.");
-			
-			/*아이디와 이메일이 중복되지 않으면 insert 실행*/
+			/*nsert 실행*/
 			int userId = memberDAO.insertUser(newMember);
-	
 			/*새로 삽입된 사용자의 id를 prefer의 memberId(DB에서는 User를 참조하는 외래키)로 set*/
 			prefer.setMemberId(userId);
 			preferDAO.insertNew(prefer);
-			System.out.println("inserted user : "+userId);
 		}catch(ServerErrorException e) {
 			e.printStackTrace();
 			throw e;
