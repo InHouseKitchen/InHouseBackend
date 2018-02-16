@@ -3,6 +3,7 @@ package org.nexters.inhousekitchen.service;
 import javax.annotation.Resource;
 
 import org.nexters.inhousekitchen.dao.MemberDAO;
+import org.nexters.inhousekitchen.dao.MemberDAOimpl;
 import org.nexters.inhousekitchen.dao.PreferDAO;
 import org.nexters.inhousekitchen.dto.MemberDTO;
 import org.nexters.inhousekitchen.dto.PreferDTO;
@@ -50,7 +51,7 @@ public class MemberServiceimpl implements MemberService {
 	@Override
 	public void registerMember(MemberDTO newMember, PreferDTO prefer) throws ServerErrorException{
 		try{
-			/*nsert 실행*/
+			/*insert 실행*/
 			int userId = memberDAO.insertUser(newMember);
 			/*새로 삽입된 사용자의 id를 prefer의 memberId(DB에서는 User를 참조하는 외래키)로 set*/
 			prefer.setMemberId(userId);

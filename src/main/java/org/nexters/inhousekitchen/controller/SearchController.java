@@ -6,10 +6,15 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.nexters.inhousekitchen.dto.DiningDTO;
+import org.nexters.inhousekitchen.dto.MemberDTO;
 import org.nexters.inhousekitchen.exception.ServerErrorException;
+import org.nexters.inhousekitchen.service.MemberService;
 import org.nexters.inhousekitchen.service.SearchService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,14 +27,16 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 @RestController
-@RequestMapping("/search")
+@RequestMapping(value="/search")
 @Api(value="/search", description="홈 & 검색 & 호스트 상세조회")
 
 public class SearchController {
 
 	@Resource
 	SearchService searchService;
-		
+	@Resource
+	MemberService memberService;
+	
 	/*메인페이지 */
 	@ApiOperation(httpMethod="GET", value="위치검색 전 홈에서 메뉴 조회(Internal Server Error 발생 시 빈 배열 반환)")
 	@RequestMapping(value="/main", method=RequestMethod.GET, produces = { "application/json" })
@@ -39,9 +46,24 @@ public class SearchController {
 	public ResponseEntity<List> mainPage() {
 		
 		List<DiningDTO> menuList;
+		String username = null;
+		Object principal = null;
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println(auth);
+		if(auth!=null) 
+			principal = auth.getPrincipal();
 		
 		try {
-			menuList = searchService.getHomeMenues(1);
+			if(principal instanceof UserDetails) 
+				username = ((UserDetails)principal).getUsername();
+			else username = (String)principal;
+			
+			if(username!=null) {
+				System.out.println("username : "+username);
+				MemberDTO member = memberService.getMemberByUserName(username);
+				menuList = searchService.getHomeMenues(member.getId());
+			}
+			else menuList = searchService.getHomeMenues(0);
 			for(DiningDTO element: menuList) {
 				element.getDiningImages().get(0).setId(null);
 				element.getDiningImages().get(0).setDiningId(null);

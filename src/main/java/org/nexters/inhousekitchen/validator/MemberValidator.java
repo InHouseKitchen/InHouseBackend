@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.nexters.inhousekitchen.dto.MemberDTO;
 import org.nexters.inhousekitchen.dto.MemberEmailDTO;
+import org.nexters.inhousekitchen.dto.MemberLoginDTO;
 import org.nexters.inhousekitchen.dto.MemberPasswordDTO;
 import org.nexters.inhousekitchen.dto.MemberUserNameDTO;
 import org.nexters.inhousekitchen.exception.ServerErrorException;
@@ -74,7 +75,10 @@ public class MemberValidator implements Validator{
 			return;
 		}
 		
+		
+		
 		/*회원가입 시 null 검증*/
+		/* TODO : if문이 너무 많음. 프로퍼티 널 체크 간결하게 하는 법 모색*/
 		if(obj instanceof MemberDTO) {
 			if(mem.getUserName()==null || mem.getUserName().trim().isEmpty())
 				errs.rejectValue("userName", "Null");
@@ -82,14 +86,16 @@ public class MemberValidator implements Validator{
 				errs.rejectValue("pwd", "Null");
 			if(mem.getEmail()==null || mem.getEmail().trim().isEmpty())
 				errs.rejectValue("email", "Null");
-			if(mem.getPrefer().getFavor1()==null || mem.getPrefer().getFavor1().trim().isEmpty())
-				errs.rejectValue("prefer", "Null");
-			if(mem.getPrefer().getFavor2()==null || mem.getPrefer().getFavor2().trim().isEmpty())
-				errs.rejectValue("prefer", "Null");
-			if(mem.getPrefer().getFavor3()==null || mem.getPrefer().getFavor3().trim().isEmpty())
-				errs.rejectValue("prefer", "Null");
-			if(mem.getPrefer().getFavor4()==null || mem.getPrefer().getFavor4().trim().isEmpty())
-				errs.rejectValue("prefer", "Null");
+			if(mem.getPrefer()!=null) {
+				if(mem.getPrefer().getFavor1()==null || mem.getPrefer().getFavor1().trim().isEmpty())
+					errs.rejectValue("prefer", "Null");
+				if(mem.getPrefer().getFavor2()==null || mem.getPrefer().getFavor2().trim().isEmpty())
+					errs.rejectValue("prefer", "Null");
+				if(mem.getPrefer().getFavor3()==null || mem.getPrefer().getFavor3().trim().isEmpty())
+					errs.rejectValue("prefer", "Null");
+				if(mem.getPrefer().getFavor4()==null || mem.getPrefer().getFavor4().trim().isEmpty())
+					errs.rejectValue("prefer", "Null");
+			}
 		}
 			
 	}

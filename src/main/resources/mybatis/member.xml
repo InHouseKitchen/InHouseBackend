@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
 	<select id="selectByUsername" parameterType="java.util.HashMap" resultType="org.nexters.inhousekitchen.dto.MemberDTO">
-		SELECT * 
+		SELECT id, username, password as pwd, status, email
 		FROM User
 		WHERE username = #{username}
 	</select>
