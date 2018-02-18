@@ -1,6 +1,5 @@
 package org.nexters.inhousekitchen.dao;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,11 +7,9 @@ import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.nexters.inhousekitchen.dto.DiningDTO;
-import org.nexters.inhousekitchen.dto.MemberDTO;
 import org.nexters.inhousekitchen.dto.PreferDTO;
+import org.nexters.inhousekitchen.dto.ReviewDTO;
 import org.nexters.inhousekitchen.exception.ServerErrorException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 @Repository
 
@@ -48,5 +45,17 @@ public class SearchDAOimpl implements SearchDAO {
 			throw new ServerErrorException(e.getMessage());
 		}
 		return result;
+	}
+	
+	/* 상세보기 페이지 정보 가져오기*/
+	@Override
+	public List<DiningDTO> getDetailInfo(int hostId) {
+		return template.selectList("dining.getDetailInfo", hostId);
+	}
+
+	 /* Review 정보 가져오기*/
+	@Override
+	public List<ReviewDTO> getReview(int diningId) {
+		return template.selectList("dining.getReview");
 	}
 }

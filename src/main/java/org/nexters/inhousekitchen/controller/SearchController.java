@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.nexters.inhousekitchen.dto.DiningDTO;
 import org.nexters.inhousekitchen.dto.MemberDTO;
+import org.nexters.inhousekitchen.dto.ReviewDTO;
 import org.nexters.inhousekitchen.exception.ServerErrorException;
 import org.nexters.inhousekitchen.service.MemberService;
 import org.nexters.inhousekitchen.service.SearchService;
@@ -17,10 +18,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.mysql.fabric.xmlrpc.base.Array;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -77,6 +77,24 @@ public class SearchController {
 	}
 	
 	/*메뉴 검색*/
+	
+	/*상세보기 페이지*/
+	@ApiOperation(httpMethod="GET", value="상세보기 페이지 기능")
+	@RequestMapping(value="/detail", method=RequestMethod.GET, produces = { "application/json" })
+	@ApiResponses(value = { @ApiResponse(code = 500, message = "Internal Server Error", response=List.class),
+		      				   @ApiResponse(code = 200, message = "OK", response=List.class)})
+	@ResponseBody
+	public List<DiningDTO> detailPage(@RequestParam int hostId) {
+		return searchService.getDetailInfo(hostId);
+	}
+
+	/*리뷰*/
+	@ApiOperation(value="리뷰")
+	@RequestMapping(value="/review", method=RequestMethod.GET)
+	@ResponseBody
+	public List<ReviewDTO> review(@RequestParam int diningId) {
+		return searchService.getReview(diningId);
+	}
 	
 
 }

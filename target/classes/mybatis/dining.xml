@@ -26,6 +26,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<collection javaType="java.util.List" property="diningImages" resultMap="DiningImageResultMap"></collection>
 	</resultMap>
 	
+	<resultMap type="org.nexters.inhousekitchen.dto.ReviewDTO" id="ReviewResultMap">
+		<result javaType="java.lang.Integer" property="id" column="id"></result>
+		<result javaType="java.lang.Integer" property="userId" column="userId"></result>
+		<result javaType="java.lang.Integer" property="diningId" column="diningId"></result>
+		<result javaType="java.lang.Integer" property="scoreId" column="scoreId"></result>
+		<result javaType="java.lang.String" property="content" column="content"></result>
+		<result javaType="java.sql.Date" property="createDate" column="createDate"></result>
+	</resultMap>
+	
 	<!-- 김다은 - 로그아웃 상태에서 메인페이지 조회 시 실행쿼리 
 		 		 오늘 이후로 진행되는 메뉴들 중에 임의로 6개 뽑기 -->
 	<select id="selectByRandom" resultMap="DiningResultMap">
@@ -60,6 +69,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LIMIT 6
 			
 	</select>
+	
+	<!-- 김나연 - Dining 테이블 정보 가져오기 -->
+	<select id="getDetailInfo" parameterType="Int" resultMap="DiningResultMap">
+		SELECT		Dining.id, Dining.hostId, Dining.startDate, Dining.endDate, Dining.startTime, Dining.endTime, Dining.price, Dining.dIntro, Dining.mIntro, Host.phone, Host.foodType, Host.cookType, Host.address, Host.profileImage, DiningImage.imageUrl
+		FROM		Dining NATURAL JOIN Host NATURAL JOIN DiningImage
+		WHERE		Dining.id = DiningImage.diningId
+		AND			Dining.id = #{id}
+		AND			Dining.hostId = Host.userId
+	</select>
+	
+	<!-- 김나연 - Review 정보 가져오기 -->
+	<select id="getReview" parameterType="Int" resultMap="ReviewResultMap">
+		SELECT	Review.diningId, Review.score, Review.content, Review.createDate
+		FROM	Review
+		WHERE	diningId = #{diningId}
+	</select>
+	
 </mapper>
  
  

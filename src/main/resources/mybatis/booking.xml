@@ -4,7 +4,36 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="booking">
-
+	
+	<!-- 김나연 - 예약하기 기능 -->
+	<insert id="booking" parameterType="org.nexters.inhousekitchen.dto.BookingDTO">
+		INSERT INTO Booking (userId, diningId, guestNumber, status, reservationDate)
+		VALUES(#{userId},#{diningId},#{guestNumber},'대기',#{reservationDate})
+	</insert>
+	
+	<!-- 김나연 - 예약 수락하기 기능 -->
+	<update id="accept" parameterType="int">
+		UPDATE	Booking
+		SET		status = '수락'
+		WHERE	userId = #{userId}
+	</update>
+	
+	<!-- 김나연 - 예약 거부하기 기능 -->
+	<update id="deny" parameterType="int">
+		UPDATE	Booking
+		SET		status = '거부'
+		WHERE	userId = #{userId}
+	</update>
+	
+	<!-- 김나연 - 예약 종료하기 기능 -->
+	<update id="end">
+		UPDATE	Booking
+		SET		status = '종료'
+		<![CDATA[
+		WHERE	reservationDate < CURDATE()
+		]]>
+	</update>
+	
 </mapper>
  
  

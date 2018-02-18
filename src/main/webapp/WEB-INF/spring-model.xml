@@ -10,10 +10,7 @@
     <!-- dbcp와 mybatis 설정 -->
 
 <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-      <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-      <property name="url" value="jdbc:mysql://nydb.c284tnijrgky.ap-northeast-2.rds.amazonaws.com/Kitchen" />
-      <property name="username" value="user" />
-      <property name="password" value="nynydbdb!newpw" />
+     
 </bean>
 
 <!-- MyBatis 연동 설정 -->

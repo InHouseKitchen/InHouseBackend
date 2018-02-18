@@ -42,4 +42,16 @@ public class SearchServiceimpl implements SearchService {
 		}
 		return result;
 	}
+	
+	/* 상세보기 페이지 정보 가져오기*/
+	@Override
+	public List<DiningDTO> getDetailInfo(int hostId) {
+		return searchDAO.getDetailInfo(hostId);
+	}
+
+	/* Review 정보 가져오기*/
+	@Override
+	public List<ReviewDTO> getReview(int diningId) {
+		return searchDAO.getReview(diningId);
+	}
 }
