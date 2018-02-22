@@ -1,5 +1,6 @@
 package org.nexters.inhousekitchen.config;
 
+import org.nexters.inhousekitchen.security.CustomFilter;
 import org.nexters.inhousekitchen.security.MemberAuthManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class AuthConfig {
 	 
+	@Bean
+	CustomFilter customFilter() {
+		return new CustomFilter();
+	}
 	@Bean
 	 AuthenticationManager memberAuthManager() {
 		  return new MemberAuthManager();
