@@ -31,6 +31,7 @@ import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -70,24 +71,27 @@ public class SignController {
 	@ApiResponses(value = { @ApiResponse(code = 500, message = "Internal Server Error", response=String.class),
 							   @ApiResponse(code = 400, message = "Bad Request", response=String.class),
 		      				   @ApiResponse(code = 200, message = "OK", response=String.class)})
-	public ResponseEntity<String> signup(){
+	public ResponseEntity<String> signup(@RequestHeader("sessionID") String sessionID){
 		
 		String username = null;
 		Object principal = null;
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		Authentication auth = hashOps.get(sessionID, entryKey);
+		
 		if(auth!=null) 
 			principal = auth.getPrincipal();
 		
 	
-			if(principal instanceof UserDetails) 
-				username = ((UserDetails)principal).getUsername();
-			else username = (String)principal;
+		if(principal instanceof UserDetails) 
+			username = ((UserDetails)principal).getUsername();
+		else username = (String)principal;
 			
-			if(username.equals("anonymousUser")) 
-				return new ResponseEntity<String>("이미 로그아웃 상태입니다.", HttpStatus.FORBIDDEN);
-			else 
-				return new ResponseEntity<String>("로그아웃 되었습니다.", HttpStatus.OK);
-			
+		if(username == null || username.equals("anonymousUser")) 
+			return new ResponseEntity<String>("이미 로그아웃 상태입니다.", HttpStatus.FORBIDDEN);
+		else {
+			hashOps.delete(sessionID, entryKey);
+			return new ResponseEntity<String>("로그아웃 되었습니다.", HttpStatus.OK);
+		}
 		
 	}
 	
@@ -118,7 +122,6 @@ public class SignController {
 		try {
 			token = new UsernamePasswordAuthenticationToken(requestBody.getUserName(), requestBody.getPwd());
 			result = memberAuthManager.authenticate(token);
-			SecurityContextHolder.getContext().setAuthentication(result);
 			String authResult = sessionEncoder.encodePassword(requestBody.getUserName(), entryKey);
 			hashOps.put(authResult, entryKey, result);
 			return new ResponseEntity<String>(authResult, HttpStatus.OK);
