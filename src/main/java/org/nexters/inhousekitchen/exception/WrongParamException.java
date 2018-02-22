@@ -1,7 +1,7 @@
 package org.nexters.inhousekitchen.exception;
 
 
-public class WrongParamException extends CustomException{
+public class WrongParamException extends Exception{
 
 	public WrongParamException(String message) {
 		super(message);
