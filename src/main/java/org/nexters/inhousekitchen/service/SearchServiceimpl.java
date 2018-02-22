@@ -10,6 +10,7 @@ import org.nexters.inhousekitchen.dao.SearchDAO;
 import org.nexters.inhousekitchen.dao.SearchDAOimpl;
 import org.nexters.inhousekitchen.dto.DiningDTO;
 import org.nexters.inhousekitchen.dto.PreferDTO;
+import org.nexters.inhousekitchen.dto.ReviewDTO;
 import org.nexters.inhousekitchen.exception.ServerErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ListOperations;

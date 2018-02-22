@@ -1,9 +1,14 @@
 package org.nexters.inhousekitchen.controller;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Resource;
 
+import org.nexters.inhousekitchen.config.SessionEncoder;
+import org.nexters.inhousekitchen.dto.DiningDTO;
 import org.nexters.inhousekitchen.dto.MemberDTO;
 import org.nexters.inhousekitchen.dto.MemberLoginDTO;
 import org.nexters.inhousekitchen.exception.ServerErrorException;
@@ -18,8 +23,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,14 +49,50 @@ public class SignController {
 	@Resource
 	AuthenticationManager memberAuthManager;
 	@Resource
-	private MemberService memberService;
+	MemberService memberService;
+	@Resource(name="passwordEncoder")
+	BCryptPasswordEncoder passwordEncoder;
 	@Resource
-	private BCryptPasswordEncoder passwordEncoder;
+	ShaPasswordEncoder sessionEncoder;
 	@Resource
-	private RedisTemplate<String, String> template;
+	RedisTemplate<String, String> template;
 	@Resource(name="redisTemplate")
-	private HashOperations<String, String, Authentication> hashOps;
+	HashOperations<String, String, Authentication> hashOps;	
+	@Resource
+	String entryKey;
+	
+	
+	
+	
+	/*--------------------로그아웃-----------------------*/
+	@ApiOperation(httpMethod="GET", value="로그아웃")
+	@RequestMapping(value="/signout", method=RequestMethod.GET, produces={ "text/plain; charset=utf-8" })
+	@ApiResponses(value = { @ApiResponse(code = 500, message = "Internal Server Error", response=String.class),
+							   @ApiResponse(code = 400, message = "Bad Request", response=String.class),
+		      				   @ApiResponse(code = 200, message = "OK", response=String.class)})
+	public ResponseEntity<String> signup(){
 		
+		String username = null;
+		Object principal = null;
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if(auth!=null) 
+			principal = auth.getPrincipal();
+		
+	
+			if(principal instanceof UserDetails) 
+				username = ((UserDetails)principal).getUsername();
+			else username = (String)principal;
+			
+			if(username.equals("anonymousUser")) 
+				return new ResponseEntity<String>("이미 로그아웃 상태입니다.", HttpStatus.FORBIDDEN);
+			else 
+				return new ResponseEntity<String>("로그아웃 되었습니다.", HttpStatus.OK);
+			
+		
+	}
+	
+	
+	
 	
 	/*--------------------로그인-----------------------*/
 	@ApiOperation(httpMethod="POST", value="로그인(로컬)")
@@ -75,7 +119,9 @@ public class SignController {
 			token = new UsernamePasswordAuthenticationToken(requestBody.getUserName(), requestBody.getPwd());
 			result = memberAuthManager.authenticate(token);
 			SecurityContextHolder.getContext().setAuthentication(result);
-			return new ResponseEntity<String>("OK", HttpStatus.OK);
+			String authResult = sessionEncoder.encodePassword(requestBody.getUserName(), entryKey);
+			hashOps.put(authResult, entryKey, result);
+			return new ResponseEntity<String>(authResult, HttpStatus.OK);
 			
 		}catch(AuthenticationException e) {
 			if(e.getMessage().toString()=="ServerError")
