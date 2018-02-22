@@ -4,17 +4,12 @@
 		 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
-	
-	
-
 		
 	<http auto-config="true">
-		<csrf disabled="true"/> 
-		<intercept-url pattern = "classpath:/META-INF/resources/**" access="hasRole('ADMIN')"/>
-		<intercept-url pattern = "/swagger-ui.html" access="permitAll"/>
-		<intercept-url pattern = "/resources/**" access="hasRole('ADMIN')"/>
-		<intercept-url pattern = "/webjars/**" access="hasRole('ADMIN')"/>
-		<intercept-url pattern = "classpath:/META-INF/resources/webjars/" access="hasRole('ADMIN')"/>
+		<csrf disabled="true"/>
+		<!-- TODO : swagger-ui 제외시키는 법 찾기 
+		<custom-filter ref="customFilter" before="BASIC_AUTH_FILTER"/>
+		 -->
 		<intercept-url pattern = "/mypage/**" access="hasRole('USER')"/>
 		<intercept-url pattern = "/booking/**" access="hasRole('USER')"/>
 		<intercept-url pattern = "/search/**" access="permitAll"/>
@@ -22,7 +17,16 @@
 		<intercept-url pattern = "/singin" access="permitAll"/>
 		<intercept-url pattern = "/signup" access="permitAll"/>
 		<intercept-url pattern = "/signout" access="hashRole('USER')"/>
+
+	 
+		<intercept-url pattern = "classpath:/META-INF/resources/**" access="hasRole('ADMIN')"/>
+		<intercept-url pattern = "/swagger-ui.html" access="hasRole('ADMIN')"/>
+		<intercept-url pattern = "/resources/**" access="hasRole('ADMIN')"/>
+		<intercept-url pattern = "/webjars/**" access="hasRole('ADMIN')"/>
+		<intercept-url pattern = "classpath:/META-INF/resources/webjars/" access="hasRole('ADMIN')"/>
+	
 	</http>
+	
 
 	<authentication-manager>
 		<authentication-provider>
@@ -30,7 +34,7 @@
 					<!--  Password is prefixed with {noop} to indicate to DelegatingPasswordEncoder that
 					NoOpPasswordEncoder should be used. This is not safe for production, but makes reading
 					in samples easier. Normally passwords should be hashed using BCrypt  -->
-					<user name="kitchen" password="kitchen" authorities="ROLE_ADMIN, ROLE_USER" />
+					<user name="kitchen" password="kitchen" authorities="ROLE_ADMIN" />
 				</user-service>
 		</authentication-provider>
 	</authentication-manager>
